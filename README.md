@@ -1,5 +1,7 @@
 # Self-Audit — The Self-Evolving Claude Code Health Check
 
+[中文文档](README_zh.md) | [Install](#quick-start) | [13 Check Items](#13-check-items) | [Self-Evolution Loops](#the-three-self-evolution-loops)
+
 > **The only audit skill that learns from itself.** Detects. Diagnoses. Prescribes. Iterates.
 
 Self-Audit is not just another "run `wc -l` and report" skill. It is a **three-loop self-evolving system**: errors auto-promote to permanent guardrails, stale skills get market comparison with better alternatives, and configuration bloat gets surgical diagnosis with split/compress/merge prescriptions.
