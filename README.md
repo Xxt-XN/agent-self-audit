@@ -25,6 +25,8 @@ Self-Audit is not just another "run `wc -l` and report" skill. It is a **three-l
 
 ## Quick Start
 
+See [INSTALL.md](INSTALL.md) for Codex CLI, Cursor, Windsurf, Gemini CLI installation.
+
 ```bash
 cp -r self-audit ~/.claude/skills/self-audit
 quick audit
