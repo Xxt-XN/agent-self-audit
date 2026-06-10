@@ -1,123 +1,173 @@
-# Self-Audit — The Self-Evolving Claude Code Health Check
+# Self-Audit — The Self-Evolving Agent Health Check
 
-[中文文档](README_zh.md) | [Install](#quick-start) | [13 Check Items](#13-check-items) | [Self-Evolution Loops](#the-three-self-evolution-loops)
+[中文文档](README_zh.md) | [Install](INSTALL.md) | [13 Checks](#13-check-items) | [Evolution Loops](#the-three-self-evolution-loops) | [Supported Tools](#supported-tools)
 
-> **The only audit skill that learns from itself.** Detects. Diagnoses. Prescribes. Iterates.
+> **The only audit skill that learns from itself.** Detects → Diagnoses → Prescribes → Iterates.
 
-Self-Audit is not just another "run `wc -l` and report" skill. It is a **three-loop self-evolving system**: errors auto-promote to permanent guardrails, stale skills get market comparison with better alternatives, and configuration bloat gets surgical diagnosis with split/compress/merge prescriptions.
+Your agent configuration rots silently. Rules files bloat week by week. Skills pile up unused. Security settings drift. Environment tools go missing. Self-Audit catches all of it — then prescribes exactly what to do — then learns from every audit to get smarter.
 
-- **13 check items** across 2 tiers (Quick < 500 tokens, Full with trend analysis)
-- **Auto-bootstrap**: first run on a new machine creates audit infrastructure from scratch
-- **Cross-platform**: Git Bash · cmd · PowerShell · macOS · Linux
-- **Zero-config**: all paths via `${HOME}`, no setup required
-- **280+ GitHub Stars** · **148K+ marketplace reach** · **9 ADRs** · **9 Fitness Functions**
+**Works everywhere the agentskills.io standard is supported.**
+
+---
 
 ## What Makes It Different
 
-| Other Skills | Self-Audit |
-|-------------|------------|
-| Detect problems | Detect → Diagnose → Prescribe |
-| One-time audit | Trend tracking across audits |
-| Static thresholds | **5-dimension health scoring** (balance, granularity, density, references, context) |
-| Report and stop | **3-repetition → auto-promote to hard pitfall** |
-| Ignore stale skills | **Compare against GitHub marketplace (148K+ stars repo)** |
-| Absolute line counts | **Quality-graded scoring** — a 300-line well-structured file scores A, a 150-line wall-of-text scores D |
+| Typical Audit Skills | Self-Audit |
+|---------------------|------------|
+| Count lines and report | **5-dimension health scoring** — a 300-line well-structured file scores A, a 150-line wall-of-text scores D |
+| Detect problems, stop | **Detect → Diagnose → Prescribe** — split/compress/merge instructions |
+| Run once and forget | **Trend tracking across audits** — growth rates, predictive warnings |
+| Static thresholds | **Contextual scoring** — line count is an amplifier, never a false positive |
+| Ignore stale tools | **Market intelligence** — scans GitHub skill marketplaces for better alternatives |
+| Report and wait | **3-repetition auto-promotion** — recurring issues become permanent guardrails |
 
-## Quick Start
-
-See [INSTALL.md](INSTALL.md) for Codex CLI, Cursor, Windsurf, Gemini CLI installation.
-
-```bash
-cp -r self-audit ~/.claude/skills/self-audit
-quick audit
-```
-
-First run auto-creates: `audit-log.md` template, `memory/` directory, `environment.md` placeholder. By the 5th audit, Full mode activates automatically with trend analysis, predictive warnings, and market intelligence.
-
-## Trigger Words
-
-| Mode | Triggers |
-|------|----------|
-| **Quick** | `quick audit`, `health ping` |
-| **Full** | `full audit`, `deep audit`, `weekly audit` |
-| **Auto** | `self-optimization`, `config check`, `token efficiency`, `skill management`, `optimize yourself`, `config review`, `系统复盘`, `团队复盘`, `config复盘` |
+---
 
 ## The Three Self-Evolution Loops
 
-### Loop 1: Error Evolution (Repetition → Hard Rule)
+### Loop 1: Error → Hard Rule
 ```
 1st occurrence → Suggestion
 2nd occurrence → Warning ("if repeated → structural promotion")
-3rd occurrence → CRITICAL → auto-written to rules/coding.md as permanent pitfall
+3rd occurrence → CRITICAL → auto-written as permanent pitfall
 ```
-Same mistake can't happen 3 times. The system hardens itself.
+Same mistake can't happen three times. The system hardens itself.
 
-### Loop 2: Skill Evolution (Market Intelligence)
+### Loop 2: Skills → Market Comparison
 ```
-Item 13 scans 3 GitHub skill marketplaces (every 24h, cached)
-  → 4-dimension scoring (Stars 35% · Recency 30% · Activity 20% · Maintenance 15%)
-  → Cross-reference installed skills
-  → Recommend better alternatives (F-SKL-004/005) or gap-filling (F-SKL-006)
+Every 24h: scan 3 GitHub skill marketplaces (148K+ stars of data)
+  → Score repos: Stars 35% · Recency 30% · Activity 20% · Maintenance 15%
+  → Cross-reference installed skills against market alternatives
+  → Recommend upgrades and gap-fills
 ```
 Your skill arsenal evolves without you searching.
 
-### Loop 3: Configuration Evolution (Health Scoring)
+### Loop 3: Configuration → Health Prescription
 ```
-Item 1 doesn't just count lines — it diagnoses structure:
-  D1 Section Balance (25%) · D2 Structure Granularity (20%)
-  D3 Prose Density (25%) · D4 Reference Ratio (15%) · D5 Amplifier (15%)
-  → A-F grade + split/compress/merge prescription
+Parse every section · track growth · detect duplication (Jaccard 0.45)
+  → 5-dimension grade: Balance · Granularity · Density · References · Amplifier
+  → Specific Rx: "Move lines 20–76 to rules/environment.md" (not just "your file is too long")
 ```
-300 lines with good structure? Grade A. 150 lines of wall-of-text? Grade D.
+Heavy configurations diagnosed surgically.
+
+---
 
 ## 13 Check Items
 
-| # | Item | Quick | Full |
-|---|------|:-----:|:----:|
-| 1 | CLAUDE.md Health | ✅ line count | ✅ 5-dim scoring + split/compress Rx |
-| 2 | Skill Health | ✅ count | ✅ duplicates + market comparison |
+| # | What It Checks | Quick | Full |
+|---|---------------|:-----:|:----:|
+| 1 | Configuration Health | ✅ line count | ✅ 5-dim scoring + split/compress Rx |
+| 2 | Skill Inventory | ✅ count | ✅ duplicates + market comparison |
 | 3 | Security | ✅ plaintext keys | ✅ permissions audit |
-| 4 | Memory System | ✅ count | ✅ staleness + frontmatter |
+| 4 | Memory System | ✅ count | ✅ staleness + structure |
 | 5 | Model Routing | ✅ tiers | ✅ cost efficiency |
-| 6 | Updates | ✅ `npx skills check` | ✅ changelog + priority |
-| 7 | Skill Utilization | — | ✅ usage vs install |
+| 6 | Updates Available | ✅ `npx skills check` | ✅ changelog + priority |
+| 7 | Skill Utilization | — | ✅ usage rates vs install count |
 | 8 | Archive Recovery | — | ✅ restoration candidates |
-| 9 | Yushi Audit Quality | — | ✅ agent compliance spot-check |
-| 10 | Environment | ✅ 4 atomic (disk/RAM/LO/encoding) | ✅ 8 tools + 7 pkgs + network + baseline |
-| 11 | Solo Ratio | — | ✅ pipeline compliance |
-| 12 | Skill Violations | — | ✅ F-SKP- repetition tracking |
-| 13 | Market Intelligence | — | ✅ GitHub API skill market scan |
+| 9 | Agent Audit Quality | — | ✅ compliance spot-checks |
+| 10 | Environment | ✅ 4 atomic checks | ✅ 8 tools + 7 pkgs + network + baseline |
+| 11 | Solo Work Ratio | — | ✅ pipeline compliance |
+| 12 | Skill Violations | — | ✅ repetition tracking |
+| 13 | Market Intelligence | — | ✅ GitHub marketplace scan every 24h |
 
-## Five-Type Finding Taxonomy
+---
 
-| Tag | Meaning |
-|-----|---------|
-| **Correction** | Defect needing immediate fix (broken symlink, plaintext key) |
-| **Repetition** | Same Finding ID appeared in prior audit (tracked for promotion) |
-| **Role Redirect** | Work done by wrong agent (Boss editing code directly) |
-| **Frustration Escalation** | User had to ask > 1 time for same thing |
-| **Workaround** | Ad-hoc fix that should be structural |
+## Zero to Full Audit — Automatic
+
+```
+First run: auto-creates audit-log.md, memory/ directory, environment.md placeholder
+Second run: tracks deltas from first snapshot
+Third run: partial trends available
+Fifth run: Full mode activates — trends + predictions + market intelligence all online
+```
+
+No config. No setup. Every run unlocks more capability.
+
+---
+
+## Supported Tools
+
+Self-Audit follows the [agentskills.io](https://agentskills.io) standard. Installation is a single folder copy.
+
+| Tool | Install Path | Trigger |
+|------|-------------|---------|
+| Claude Code | `~/.claude/skills/self-audit/` | `quick audit` |
+| Codex CLI | `~/.codex/skills/self-audit/` | `$self-audit quick audit` |
+| Cursor | `~/.cursor/skills/self-audit/` | Smart match (say `quick audit`) |
+| Windsurf | `~/.codeium/windsurf/skills/self-audit/` | Cascade auto-match |
+| Gemini CLI | `~/.gemini/skills/self-audit/` | Smart match |
+
+See [INSTALL.md](INSTALL.md) for one-command install per tool.
+
+---
+
+## Two Tiers
+
+| | Quick | Full |
+|---|-------|------|
+| Check items | 1-6 + Item 10-Quick | All 13 |
+| Token cost | < 500 | ~2000-4000 |
+| Environment | 4 atomic (disk/RAM/LO/encoding) | Full toolchain + network + baseline |
+| Trends & predictions | No | Yes |
+| Market intelligence | No | Yes (24h cached) |
+| Activates | Any trigger, < 5 prior audits | `full audit` or ≥ 5 prior audits |
+
+---
+
+## Finding Taxonomy
+
+Every issue gets a permanent ID tracked across audits:
+
+| Type | What It Means |
+|------|---------------|
+| **Correction** | Broken symlink, plaintext key, missing tool — fix now |
+| **Repetition** | Same ID appeared before — tracked for 3-strike promotion |
+| **Role Redirect** | Wrong agent doing the work — pipeline violation |
+| **Frustration Escalation** | User asked for this twice — process gap |
+| **Workaround** | Ad-hoc patch that needs structural fix |
+
+---
+
+## Edge Cases Handled
+
+- **New machine, zero config**: Bootstraps entire audit infrastructure from scratch
+- **Read-only filesystem**: Degrades to T1 mode (Quick only, no file writes, diagnostic notice)
+- **No HOME access**: Terminates cleanly with `insufficient-context` message
+- **Windows cmd.exe**: Auto-detects platform, maps `wc -l` → `find /c /v`, `grep` → `findstr`
+- **No GitHub auth**: Item 13 skips gracefully, rest of audit runs
+- **No Python**: Quick mode uses pure shell; only Full mode toolchain checks need Python
+
+---
 
 ## Files
 
-| File | Purpose |
-|------|---------|
-| `SKILL.md` | Executable prompt (290 lines, ≤ 300 F4 constraint) |
-| `bootstrap.md` | Platform detection, command mapping, writability check, first-run init |
-| `environment-checks.md` | Item 10 companion — Quick commands, Full toolchain/network/baseline |
-| `market-intelligence.md` | Item 13 companion — GitHub API market scan, scoring algorithm |
-| `compress-config.md` | Item 1 companion — 5-dimension health scoring config, human-tunable thresholds |
-| `DESIGN.md` | 9 ADRs, 9 Fitness Functions, data flow diagram |
-| `README.md` | This file |
-| `README_zh.md` | Chinese version |
+| File | Role |
+|------|------|
+| `SKILL.md` | Executable prompt (290 lines) |
+| `bootstrap.md` | Platform detection, degradation tiers, first-run init |
+| `environment-checks.md` | Item 10 — toolchain, packages, network, baseline |
+| `market-intelligence.md` | Item 13 — GitHub marketplace scan, scoring algorithm |
+| `compress-config.md` | Item 1 — health scoring weights, thresholds (human-tunable) |
+| `DESIGN.md` | 9 ADRs, 9 fitness functions, data flow |
+| `README.md` | You are here |
+| `README_zh.md` | Chinese docs |
+| `INSTALL.md` | Per-tool install commands |
 
-## Configuration
+---
 
-None required. All paths resolve via `${HOME}`. T1 degradation (read-only filesystem) supported. T2 diagnostic mode (HOME inaccessible) available.
+## Quick Start
 
-## Requirements
+```bash
+git clone https://github.com/Xxt-XN/claude-code-self-audit.git
+cp -r claude-code-self-audit ~/.claude/skills/self-audit   # or your tool's path
+quick audit
+```
 
-- Claude Code CLI
-- At least one of: Git Bash, cmd, PowerShell, or Python
-- Quick mode: zero external dependencies
-- Item 13 (Market Intelligence): `gh` CLI authenticated
+First run bootstraps everything. Fifth run unlocks Full mode with trends, predictions, and market intelligence.
+
+---
+
+<br>
+<div align="center">
+<strong>Evolve your agent configuration. One audit at a time.</strong>
+</div>
