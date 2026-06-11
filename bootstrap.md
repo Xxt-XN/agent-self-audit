@@ -76,3 +76,17 @@ For audit-log.md template, write the minimal structure:
 **Effect**: File I/O disabled. Audit results not persisted. Only Quick mode checks 1-6 ran.
 **Fix**: Ensure ${HOME}/.claude/memory/ is writable, then re-run audit.
 ```
+
+## 6. Bootstrap Suggestions (Full mode)
+
+Advisory guidance for missing optional components. Never auto-creates — only recommends. Follows Item 13 principle.
+
+### B-001: yushi.md Not Found
+
+**Trigger**: Full mode AND `test -f ${HOME}/.claude/agents/yushi.md` returns false.
+**Action**: In report, append "## Bootstrap Suggestions" section with:
+1. Impact: "Items 9 (Yushi Audit Quality) and 12 (Skill Violation Tracking) were skipped."
+2. What Yushi does: "Independent overseer checks team compliance — catches skipped skills, missing handoffs, solo-mode bypasses."
+3. How to enable: "Create `~/.claude/agents/yushi.md`. A minimal template is in `${HOME}/.claude/agents/yushi-minimal-template.md` — copy it and customize."
+4. Dismissal: "To permanently silence this suggestion: add `| B-001 | yushi agent not created | <today> | User declined |` to your audit-log.md under `## Accepted Exceptions`. Or simply create the agent file."
+5. Note: "Agent system is optional. This suggestion reappears each Full audit until resolved."

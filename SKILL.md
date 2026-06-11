@@ -97,6 +97,7 @@ Every finding MUST carry exactly one taxonomy tag AND one Finding ID. This enabl
 | 10. Environment | F-ENV- | 001: LibreOffice missing (Quick), 002: encoding conflict (Quick), 003: disk <20GB (Quick), 004: network unreachable (Full), 005: critical pkg missing (Full), 006: RAM <8GB (Quick), 007: stale baseline >90d (Full) |
 | 11. Solo Ratio | F-SOL- | 001: ratio >20%, 002: rising trend, 003: >50% critical |
 | 12. Skill Violation | F-SKP- | 001: same skill skipped 2+ times, 002: Protocol Gate text missing |
+| --. Bootstrap | B- | 001: yushi agent not found (suggestion only, not a finding) |
 **Rule**: Every finding MUST include its Finding ID. For repetition, match by ID (e.g., F-MDL-001), not by prose similarity.
 
 ## Accepted Exceptions
@@ -165,6 +166,8 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 9. Yushi Audit
 
+**Full only**. Pre-check: test -f ${HOME}/.claude/agents/yushi.md. If missing → SKIP, queue Bootstrap Suggestion B-001.
+
 Read latest Yushi report from audit-log or conversation history. Randomly pick 3 items Yushi claimed to check. Personally re-verify each item: Did Yushi actually read the required files? Are conclusions consistent with data? Report PASS/FAIL per item.
 
 **Full only**. Spot-check Yushi work quality. If >1 FAIL -> flag as Yushi oversight quality decline. Taxonomy tag.
@@ -187,6 +190,8 @@ Scan current session transcript. Count Boss direct Write/Edit calls vs Gongjiang
 | Solo ratio rising trend | Pipeline avoidance habit | Compare 3-audit trend | Add PreToolUse hook reminder |
 
 ### 12. Yushi F-SKP Cross-Validation (F-YUS-)
+
+**Full only**. Pre-check: test -f ${HOME}/.claude/agents/yushi.md. If missing → SKIP (B-001 already queued by Item 9).
 
 **Full only.** Cross-validates Yushi detects SKILL VIOLATION correctly. Does NOT execute promotions.
 
@@ -251,6 +256,8 @@ All findings emitted in ONE batched report. No one-at-a-time output.
 - Before: <finding> appeared in audit N-2, N-1, N as <severity>
 - After: promoted to hard pitfall #X in rules/coding.md
 - Documented: audit-log.md "## Structural Promotions" table
+## Bootstrap Suggestions
+[Conditional: appears when yushi.md missing. Provides setup guidance + minimal template path + dismissal instructions. See bootstrap.md Section 6.]
 ## Managed Items (no longer checked)
 [List findings previously promoted. These are now hard rules, not audit items.]
 - pitfall #N: <issue> — promoted on <date>
