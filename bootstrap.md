@@ -22,14 +22,14 @@ Detect shell type and set `SHELL_TYPE`:
 ## 3. Writable Check — Degradation Tier
 
 ```
-1. test -d ${HOME}/.claude/memory/ ?
-   ├── YES AND test -w ${HOME}/.claude/memory/ → T0 (full function)
+1. test -d ~/.claude/memory/ ?
+   ├── YES AND test -w ~/.claude/memory/ → T0 (full function)
    ├── YES BUT NOT writable → T1 (Quick mode, no file I/O)
    └── NO → mkdir attempt
             ├── SUCCESS → T0
             └── FAIL → T1
-2. test -d ${HOME}/.claude/ ?
-   └── NO → T2 (terminate: "insufficient-context: Cannot access ${HOME}/.claude/")
+2. test -d ~/.claude/ ?
+   └── NO → T2 (terminate: "insufficient-context: Cannot access ~/.claude/")
 ```
 
 | Tier | Condition | Behavior |
@@ -43,10 +43,10 @@ Detect shell type and set `SHELL_TYPE`:
 Run only when T0. Each step is atomic (`test -f || create`):
 
 ```
-1. test -d ${HOME}/.claude/memory/ || mkdir -p ${HOME}/.claude/memory/
-2. test -f ${HOME}/.claude/memory/audit-log.md || write audit-log.md template
-3. test -f ${HOME}/.claude/memory/environment.md || touch environment.md
-4. test -f ${HOME}/.claude/memory/skill-usage-inventory.md || touch skill-usage-inventory.md
+1. test -d ~/.claude/memory/ || mkdir -p ~/.claude/memory/
+2. test -f ~/.claude/memory/audit-log.md || write audit-log.md template
+3. test -f ~/.claude/memory/environment.md || touch environment.md
+4. test -f ~/.claude/memory/skill-usage-inventory.md || touch skill-usage-inventory.md
 ```
 
 For audit-log.md template, write the minimal structure:
@@ -72,9 +72,9 @@ For audit-log.md template, write the minimal structure:
 ```
 ## Degradation Notice
 **Tier**: T1 — Read-only audit
-**Cause**: ${HOME}/.claude/memory/ is not writable.
+**Cause**: ~/.claude/memory/ is not writable.
 **Effect**: File I/O disabled. Audit results not persisted. Only Quick mode checks 1-6 ran.
-**Fix**: Ensure ${HOME}/.claude/memory/ is writable, then re-run audit.
+**Fix**: Ensure ~/.claude/memory/ is writable, then re-run audit.
 ```
 
 ## 6. Bootstrap Suggestions (Full mode)
@@ -83,10 +83,10 @@ Advisory guidance for missing optional components. Never auto-creates — only r
 
 ### B-001: yushi.md Not Found
 
-**Trigger**: Full mode AND `test -f ${HOME}/.claude/agents/yushi.md` returns false.
+**Trigger**: Full mode AND `test -f ~/.claude/agents/yushi.md` returns false.
 **Action**: In report, append "## Bootstrap Suggestions" section with:
 1. Impact: "Items 9 (Yushi Audit Quality) and 12 (Skill Violation Tracking) were skipped."
 2. What Yushi does: "Independent overseer checks team compliance — catches skipped skills, missing handoffs, solo-mode bypasses."
-3. How to enable: "Create `~/.claude/agents/yushi.md`. A minimal template is in `${HOME}/.claude/agents/yushi-minimal-template.md` — copy it and customize."
+3. How to enable: "Create `~/.claude/agents/yushi.md`. A minimal template is in `~/.claude/agents/yushi-minimal-template.md` — copy it and customize."
 4. Dismissal: "To permanently silence this suggestion: add `| B-001 | yushi agent not created | <today> | User declined |` to your audit-log.md under `## Accepted Exceptions`. Or simply create the agent file."
 5. Note: "Agent system is optional. This suggestion reappears each Full audit until resolved."

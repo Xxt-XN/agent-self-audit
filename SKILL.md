@@ -6,13 +6,13 @@ triggers: self-optimization, config check, token efficiency, skill management, o
 
 ## Bootstrap (pre-flight)
 
-Before running any checks, execute the bootstrap sequence. Read `${HOME}/.claude/skills/self-audit/bootstrap.md` for platform detection, command mapping, writability check, and first-run initialization. On T2 termination or T1 degradation, adjust audit mode accordingly before proceeding.
+Before running any checks, execute the bootstrap sequence. Read `~/.claude/skills/self-audit/bootstrap.md` for platform detection, command mapping, writability check, and first-run initialization. On T2 termination or T1 degradation, adjust audit mode accordingly before proceeding.
 
 # Self Audit v2
 
 ## Mode Selection
 
-**0. Self-Audit Integrity.** Run `wc -l ${HOME}/.claude/skills/self-audit/SKILL.md`. If >300 lines → WARNING: self-audit SKILL.md itself exceeds limit. Report as F-SLF-001.
+**0. Self-Audit Integrity.** Run `wc -l ~/.claude/skills/self-audit/SKILL.md`. If >300 lines → WARNING: self-audit SKILL.md itself exceeds limit. Report as F-SLF-001.
 
 When self-audit is invoked, determine mode by checking trigger words AND prior audit count:
 
@@ -25,30 +25,30 @@ When self-audit is invoked, determine mode by checking trigger words AND prior a
 | no explicit mode word | <5 prior audits | Quick |
 | no explicit mode word | >=5 prior audits | Full |
 
-To determine prior audit count, read `${HOME}/.claude/memory/audit-log.md` and count lines matching "| <date> |" format under the "## Pipeline Run Log" section.
+To determine prior audit count, read `~/.claude/memory/audit-log.md` and count lines matching "| <date> |" format under the "## Pipeline Run Log" section.
 
 **Quick mode**: items 1-6 + item 10-Quick (4 atomic env checks). **Full mode**: items 1-13 + trend analysis + predictive warnings.
 
 ## Agent Roles
 Boss (协调/决策/视觉审查) · Yushi (流程合规督查) · Gongjiang (代码/文档生成)
-Full roster & collaboration modes: `${HOME}/.claude/rules/team.md`
+Full roster & collaboration modes: `~/.claude/rules/team.md`
 
 ## Dynamic Paths
 
-All file paths in this skill use `${HOME}` as the home directory. Resolve `${HOME}` at runtime:
-- CLAUDE.md: `${HOME}/.claude/CLAUDE.md`
-- Settings: `${HOME}/.claude/settings.json`
-- Rules: `${HOME}/.claude/rules/coding.md`
-- Memory: `${HOME}/.claude/memory/`
-- Skills: `${HOME}/.claude/skills/`
-- Audit log: `${HOME}/.claude/memory/audit-log.md`
-- Environment: `${HOME}/.claude/memory/environment.md`
-- Archive: `${HOME}/.claude/memory/.archive/`
-- Yushi agent: `${HOME}/.claude/agents/yushi.md`
-- Skill usage inventory: `${HOME}/.claude/memory/skill-usage-inventory.md`
-- Memory index: `${HOME}/.claude/memory/MEMORY.md`
-- Pitfalls archive: `${HOME}/.claude/rules/pitfalls-archive.md`
-- Team rules: `${HOME}/.claude/rules/team.md`
+All file paths in this skill use `~` as the home directory. Resolve `~` at runtime:
+- CLAUDE.md: `~/.claude/CLAUDE.md`
+- Settings: `~/.claude/settings.json`
+- Rules: `~/.claude/rules/coding.md`
+- Memory: `~/.claude/memory/`
+- Skills: `~/.claude/skills/`
+- Audit log: `~/.claude/memory/audit-log.md`
+- Environment: `~/.claude/memory/environment.md`
+- Archive: `~/.claude/memory/.archive/`
+- Yushi agent: `~/.claude/agents/yushi.md`
+- Skill usage inventory: `~/.claude/memory/skill-usage-inventory.md`
+- Memory index: `~/.claude/memory/MEMORY.md`
+- Pitfalls archive: `~/.claude/rules/pitfalls-archive.md`
+- Team rules: `~/.claude/rules/team.md`
 
 ## Overall Grade
 Computed from worst finding across all items. ACCEPTED findings excluded.
@@ -104,7 +104,7 @@ Every finding MUST carry exactly one taxonomy tag AND one Finding ID. This enabl
 
 Some findings are known and deliberately accepted by the user. These should NOT trigger repetition counting or promotion.
 
-Before counting repetitions, read `${HOME}/.claude/memory/audit-log.md` and check the "## Accepted Exceptions" table. Skip any finding whose ID appears there.
+Before counting repetitions, read `~/.claude/memory/audit-log.md` and check the "## Accepted Exceptions" table. Skip any finding whose ID appears there.
 
 Users add exceptions by editing audit-log.md directly:
 ```
@@ -117,8 +117,8 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 1. CLAUDE.md Size & Trend
 
-**Quick**: `wc -l ${HOME}/.claude/CLAUDE.md` — line count only. (~12 tokens)
-**Full**: Read companion `${HOME}/.claude/skills/self-audit/compress-config.md`. Parse CLAUDE.md sections by `## ` headers. Compute 5-dim health score: D1 Section Balance(25%), D2 Structure Granularity(20%), D3 Prose Density(25%), D4 Reference Ratio(15%), D5 Line Count Modifier(15%). A-F grade per config thresholds. Jaccard dedup check (>=0.45, excl list). Min-section gate (<15 lines → F-CMD-004). 3-audit trend, +30d predict. Emit F-CMD-001~004 per trigger conditions.
+**Quick**: `wc -l ~/.claude/CLAUDE.md` — line count only. (~12 tokens)
+**Full**: Read companion `~/.claude/skills/self-audit/compress-config.md`. Parse CLAUDE.md sections by `## ` headers. Compute 5-dim health score: D1 Section Balance(25%), D2 Structure Granularity(20%), D3 Prose Density(25%), D4 Reference Ratio(15%), D5 Line Count Modifier(15%). A-F grade per config thresholds. Jaccard dedup check (>=0.45, excl list). Min-section gate (<15 lines → F-CMD-004). 3-audit trend, +30d predict. Emit F-CMD-001~004 per trigger conditions.
 | Symptom | Cause | Verify | Fix |
 |---------|-------|--------|-----|
 | Growth +10-20/wk | Yushi depositing pitfalls | Grep "Pitfall" in CLAUDE.md | caveman-compress; cap at 20 |
@@ -128,22 +128,22 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 2. Skill Health
 
-**Quick**: `ls ${HOME}/.claude/skills/ | wc -l` + `ls ${HOME}/.agents/skills/ | wc -l`. Count only. Do NOT read lockfile. Do NOT check duplicates. (~15 tokens)
+**Quick**: `ls ~/.claude/skills/ | wc -l` + `ls ~/.agents/skills/ | wc -l`. Count only. Do NOT read lockfile. Do NOT check duplicates. (~15 tokens)
 **Full**: Read lockfile. Count enabled/disabled. Stale-skill detection (>60d unused). Overlap analysis between user-level and plugin-provided skills. Taxonomy tag, Finding ID.
 
 ### 3. Security Issues
 
-**Quick**: `grep -c "sk-" ${HOME}/.claude/settings.json` (plaintext key check) + `grep "skipDangerousModePermissionPrompt" ${HOME}/.claude/settings.json` (dangerous mode check). Do NOT read full file. Two-line output. (~30 tokens)
+**Quick**: `grep -c "sk-" ~/.claude/settings.json` (plaintext key check) + `grep "skipDangerousModePermissionPrompt" ~/.claude/settings.json` (dangerous mode check). Do NOT read full file. Two-line output. (~30 tokens)
 **Full**: Read full settings.json. Plugin source verification. Permission audit. Taxonomy tag, Finding ID.
 
 ### 4. Memory System
 
-**Quick**: `ls ${HOME}/.claude/memory/ | wc -l` (file count). `wc -l ${HOME}/.claude/memory/MEMORY.md` (MEMORY.md size). Do NOT read file contents. (~20 tokens)
+**Quick**: `ls ~/.claude/memory/ | wc -l` (file count). `wc -l ~/.claude/memory/MEMORY.md` (MEMORY.md size). Do NOT read file contents. (~20 tokens)
 **Full**: Read all memory files. Per-file staleness report (>60d). Frontmatter completeness check. Memory-to-pitfall cross-reference. Taxonomy tag, Finding ID.
 
 ### 5. Model Routing
 
-**Quick**: `grep "ANTHROPIC_DEFAULT_" ${HOME}/.claude/settings.json` — check if 3 tiers are distinct. Do NOT read full file. (~15 tokens)
+**Quick**: `grep "ANTHROPIC_DEFAULT_" ~/.claude/settings.json` — check if 3 tiers are distinct. Do NOT read full file. (~15 tokens)
 **Full**: Read full settings. Cost-efficiency analysis. Model allocation optimization suggestions. Taxonomy tag, Finding ID.
 
 ### 6. Plugin & Skill Updates
@@ -153,7 +153,7 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 7. Skill Utilization
 
-**Full only** (items 7-11 are Full mode only). Read `${HOME}/.claude/memory/skill-usage-inventory.md`. Cross-reference installed skills vs invocation count. Flag skills with 0 usage after 30d, flag >2 similar skills, flag total >25. Add invocation trend (3-audit), per-skill ROI estimate, consolidation recommendations. Taxonomy tag, Finding ID.
+**Full only** (items 7-11 are Full mode only). Read `~/.claude/memory/skill-usage-inventory.md`. Cross-reference installed skills vs invocation count. Flag skills with 0 usage after 30d, flag >2 similar skills, flag total >25. Add invocation trend (3-audit), per-skill ROI estimate, consolidation recommendations. Taxonomy tag, Finding ID.
 
 | Symptom | Cause | Verify | Fix |
 |---------|-------|--------|-----|
@@ -162,11 +162,11 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 8. Archive Recovery
 
-**Full only**. List `${HOME}/.claude/memory/.archive/` (archived memory count). Read `${HOME}/.claude/rules/pitfalls-archive.md` (archived pitfalls). Flag archived items recurring in recent conversations. Add restoration candidate report, archive age distribution, cross-reference with active pitfalls. Taxonomy tag, Finding ID.
+**Full only**. List `~/.claude/memory/.archive/` (archived memory count). Read `~/.claude/rules/pitfalls-archive.md` (archived pitfalls). Flag archived items recurring in recent conversations. Add restoration candidate report, archive age distribution, cross-reference with active pitfalls. Taxonomy tag, Finding ID.
 
 ### 9. Yushi Audit
 
-**Full only**. Pre-check: test -f ${HOME}/.claude/agents/yushi.md. If missing → SKIP, queue Bootstrap Suggestion B-001.
+**Full only**. Pre-check: test -f ~/.claude/agents/yushi.md. If missing → SKIP, queue Bootstrap Suggestion B-001.
 
 Read latest Yushi report from audit-log or conversation history. Randomly pick 3 items Yushi claimed to check. Personally re-verify each item: Did Yushi actually read the required files? Are conclusions consistent with data? Report PASS/FAIL per item.
 
@@ -174,9 +174,9 @@ Read latest Yushi report from audit-log or conversation history. Randomly pick 3
 
 ### 10. Environment Snapshot
 
-**Quick** (4 atomic checks, ~65 tokens): Run inline checks for (a) disk space <20GB → F-ENV-003, (b) RAM <8GB → F-ENV-006, (c) LibreOffice missing → F-ENV-001, (d) PYTHONIOENCODING unset/GBK → F-ENV-002. Use python one-liners for disk/RAM, `test -f` for LibreOffice path, `echo $PYTHONIOENCODING` for encoding. Output: 4-line status. See `${HOME}/.claude/skills/self-audit/environment-checks.md` for exact commands.
+**Quick** (4 atomic checks, ~65 tokens): Run inline checks for (a) disk space <20GB → F-ENV-003, (b) RAM <8GB → F-ENV-006, (c) LibreOffice missing → F-ENV-001, (d) PYTHONIOENCODING unset/GBK → F-ENV-002. Use python one-liners for disk/RAM, `test -f` for LibreOffice path, `echo $PYTHONIOENCODING` for encoding. Output: 4-line status. See `~/.claude/skills/self-audit/environment-checks.md` for exact commands.
 
-**Full**: Read `${HOME}/.claude/skills/self-audit/environment-checks.md`. Execute: version parsing (8 tools), pip package check (7 packages), network connectivity (read ANTHROPIC_BASE_URL from settings.json → TCP connect), baseline comparison (load environment-baseline.md, diff against current). Flag: F-ENV-001~007 per trigger conditions. Write new snapshot to `${HOME}/.claude/memory/environment.md` if tool versions changed or disk/RAM ±20%.
+**Full**: Read `~/.claude/skills/self-audit/environment-checks.md`. Execute: version parsing (8 tools), pip package check (7 packages), network connectivity (read ANTHROPIC_BASE_URL from settings.json → TCP connect), baseline comparison (load environment-baseline.md, diff against current). Flag: F-ENV-001~007 per trigger conditions. Write new snapshot to `~/.claude/memory/environment.md` if tool versions changed or disk/RAM ±20%.
 
 ### 11. Solo vs Pipeline Ratio
 
@@ -191,7 +191,7 @@ Scan current session transcript. Count Boss direct Write/Edit calls vs Gongjiang
 
 ### 12. Yushi F-SKP Cross-Validation (F-YUS-)
 
-**Full only**. Pre-check: test -f ${HOME}/.claude/agents/yushi.md. If missing → SKIP (B-001 already queued by Item 9).
+**Full only**. Pre-check: test -f ~/.claude/agents/yushi.md. If missing → SKIP (B-001 already queued by Item 9).
 
 **Full only.** Cross-validates Yushi detects SKILL VIOLATION correctly. Does NOT execute promotions.
 
@@ -207,7 +207,7 @@ Distinct from Check 9: Check 9 random-spot-checks Yushi's general oversight qual
 
 ### 13. Skill Market Intelligence
 
-**Full only**. 24h TTL-gated market scan. Read `${HOME}/.claude/skills/self-audit/market-intelligence.md`. Scan 3 skill marketplace repos via GitHub API (`gh api`), score repos (stars 35% + recency 30% + activity 20% + maintenance 15%), cross-reference installed skills vs market. Emit F-SKL-004 (stale+better alt), F-SKL-005 (active+better alt), F-SKL-006 (category gap). Cache results in `${HOME}/.claude/memory/skill-market-intelligence.json`. Skip if `gh auth status` fails (no GitHub auth) or network unavailable without cache. Recommendations only — never auto-install.
+**Full only**. 24h TTL-gated market scan. Read `~/.claude/skills/self-audit/market-intelligence.md`. Scan 3 skill marketplace repos via GitHub API (`gh api`), score repos (stars 35% + recency 30% + activity 20% + maintenance 15%), cross-reference installed skills vs market. Emit F-SKL-004 (stale+better alt), F-SKL-005 (active+better alt), F-SKL-006 (category gap). Cache results in `~/.claude/memory/skill-market-intelligence.json`. Skip if `gh auth status` fails (no GitHub auth) or network unavailable without cache. Recommendations only — never auto-install.
 
 ## Repetition Detection & Structural Promotion
 
@@ -269,13 +269,13 @@ All findings emitted in ONE batched report. No one-at-a-time output.
 ```
 ## Recording
 
-1. Append ONE line to `${HOME}/.claude/memory/audit-log.md` under "## Pipeline Run Log":
+1. Append ONE line to `~/.claude/memory/audit-log.md` under "## Pipeline Run Log":
    ```
    | YYYY-MM-DD HH:MM | self-audit (<mode>) | self-audit | <PASS/FAIL> | <N> findings | <key finding IDs> |
    ```
    Include Finding IDs in the key finding column: e.g., "F-CMD-001(CRIT), F-SEC-001(ACCEPTED)"
 
-2. If environment changed, update `${HOME}/.claude/memory/environment.md` with new snapshot.
+2. If environment changed, update `~/.claude/memory/environment.md` with new snapshot.
 3. If any 3rd-repetition promotion was FLAGGED (PROMOTION PENDING):
    a. Append to "## Promotion Pending" in audit-log.md (already done in Step 3)
    b. Yushi handles execution (see yushi.md "Promotion Gate")

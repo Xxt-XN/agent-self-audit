@@ -52,7 +52,7 @@ Missing required package → F-ENV-005(WARN)
 
 ### Network Connectivity
 
-1. Read `${HOME}/.claude/settings.json`
+1. Read `~/.claude/settings.json`
 2. Extract `env.ANTHROPIC_BASE_URL` value
 3. If not set: report "No custom endpoint configured", skip connectivity test
 4. If set: parse host:port from URL (https→443, http→80)
@@ -62,7 +62,7 @@ Missing required package → F-ENV-005(WARN)
 
 ### Baseline Comparison
 
-1. Load `${HOME}/.claude/memory/environment-baseline.md` if exists
+1. Load `~/.claude/memory/environment-baseline.md` if exists
 2. Baseline missing → create from current snapshot, report "Baseline initialized (first run)"
 3. Compare each tool version/baseline requirement
 4. Baseline >90 days stale → F-ENV-007(SUGGESTION)

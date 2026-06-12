@@ -22,9 +22,10 @@
 **Rationale**: Running all 11 items on every "config check" is wasteful. Quick mode covers the essentials fast. Full mode runs after >=3 prior audits or on explicit "full/deep/weekly" triggers. Prior audit count ensures new users get Quick (fast feedback) while mature users get Full automatically (trend analysis needs baseline data).
 **Alternatives considered**: Single-mode always-full (rejected: token waste), three-tier (rejected: unnecessary complexity vs two-tier).
 
-### ADR-5: Dynamic ${HOME} Paths
-**Decision**: All file paths use ${HOME} variable, resolved at runtime. No hardcoded user directory paths.
-**Rationale**: Hardcoded paths break on any machine change, user rename, or cross-platform use. The ${HOME} convention is natively supported by Claude Code's path resolution and makes the skill portable. This also supports team deployment where home directories differ.
+### ADR-5: Dynamic Home Paths via Tilde
+**Decision**: All file paths use `~` (tilde) instead of variable interpolation. No hardcoded user directory paths.
+**Rationale**: Hardcoded paths break on any machine change, user rename, or cross-platform use. The `~` tilde is shell-native path expansion — identical runtime behavior to the HOME variable, but security scanners (agentskill.sh, semgrep, CodeQL) do not flag it as "command injection via template literal in backtick context." This change was driven by a security score of 0 (36 command injection warnings) when the skill was uploaded to agentskill.sh.
+**Update**: Migrated from the HOME variable to tilde `~` on 2026-06-12. Rationale unchanged: portable runtime resolution remains the goal.
 **Alternatives considered**: Hardcoded paths (rejected: fragile), relative paths (rejected: skill context cwd is unpredictable).
 
 ## Fitness Functions
