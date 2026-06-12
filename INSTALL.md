@@ -7,7 +7,7 @@ Self-Audit follows the [agentskills.io](https://agentskills.io) standard. It wor
 ```bash
 # Clone to your user skills directory, then rename the folder to self-audit
 # Replace <TOOL_PATH> with your tool's path from the table below
-git clone https://github.com/Xxt-XN/claude-code-self-audit.git ~/self-audit-temp && mkdir -p <TOOL_PATH> && cp -r ~/self-audit-temp/* <TOOL_PATH>/ && rm -rf ~/self-audit-temp
+git clone https://github.com/Xxt-XN/agent-self-audit.git ~/self-audit-temp && mkdir -p <TOOL_PATH> && cp -r ~/self-audit-temp/* <TOOL_PATH>/ && rm -rf ~/self-audit-temp
 ```
 
 ## Tool-Specific Paths

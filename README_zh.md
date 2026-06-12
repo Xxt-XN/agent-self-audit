@@ -158,8 +158,8 @@ Self-Audit 遵循 [agentskills.io](https://agentskills.io) 标准。安装只需
 ## 快速开始
 
 ```bash
-git clone https://github.com/Xxt-XN/claude-code-self-audit.git
-cp -r claude-code-self-audit ~/.claude/skills/self-audit   # 或你的工具路径
+git clone https://github.com/Xxt-XN/agent-self-audit.git
+cp -r agent-self-audit ~/.claude/skills/self-audit   # 或你的工具路径
 quick audit
 ```
 
