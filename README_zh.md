@@ -35,17 +35,17 @@ git clone https://github.com/Xxt-XN/agent-self-audit.git ~/.claude/skills/self-a
 | Token 开销 | < 500 | ~2000-4000 |
 | 环境检查 | 4 项原子检查 | 全工具链 + 网络 + 基线 |
 | 趋势与预测 | 否 | 是 |
-| 市场情报 | 否 | 是（24h 缓存） |
+| 技能生态对比 | 否 | 是（24h 缓存） |
 | 触发条件 | 任意触发词，< 5 次历史审计 | `full audit` 或 ≥ 5 次历史审计 |
 
-审计自动升级。3 次运行后趋势可用。5 次后 Full 模式激活，包含预测和市场情报。无需配置。
+审计自动升级。3 次运行后趋势可用。5 次后 Full 模式激活，包含预测和技能生态对比。无需配置。
 
 ## 13 项检查
 
 | # | 检查项 | Quick | Full |
 |---|-------|:-----:|:----:|
 | 1 | 配置健康度 | 行数 | 5 维评分 + 拆分/压缩处方 |
-| 2 | 技能清单 | 计数 | 重复 + 市场对比 |
+| 2 | 技能清单 | 计数 | 重复 + 技能生态对比 |
 | 3 | 安全 | 明文密钥 | 权限审计 |
 | 4 | 记忆系统 | 计数 | 过期 + 结构 |
 | 5 | 模型路由 | 层级 | 成本效率 |
@@ -56,7 +56,7 @@ git clone https://github.com/Xxt-XN/agent-self-audit.git ~/.claude/skills/self-a
 | 10 | 运行环境 | 4 项原子检查 | 8 工具 + 7 包 + 网络 + 基线 |
 | 11 | 独狼比例 | — | 流水线合规 |
 | 12 | 技能违规 | — | 重复追踪 |
-| 13 | 市场情报 | — | 每 24h GitHub 市场扫描 |
+| 13 | 技能生态对比 | — | 每 24h GitHub 技能库扫描 |
 
 ## 问题分类法
 
@@ -79,7 +79,7 @@ git clone https://github.com/Xxt-XN/agent-self-audit.git ~/.claude/skills/self-a
 | `SKILL.md` | 可执行 Prompt |
 | `bootstrap.md` | 平台检测、降级策略、首次初始化 |
 | `environment-checks.md` | 工具链、包、网络、基线 |
-| `market-intelligence.md` | GitHub 市场扫描和评分 |
+| `market-intelligence.md` | GitHub 技能库扫描和评分 |
 | `compress-config.md` | 健康评分权重和阈值 |
 | `DESIGN.md` | 10 个 ADR、10 条 Fitness Function、数据流图 |
 | `README.md` | 英文文档 |
