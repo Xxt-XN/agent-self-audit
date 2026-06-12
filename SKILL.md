@@ -1,7 +1,7 @@
 ---
 name: self-audit
-description: 2-tier Claude Code health check — Quick (6 items, <500 tokens) or Full (11 items + trends + predictive). Every finding classified with five-type taxonomy. Repetition findings tracked across audits. 3rd repetition auto-promotes to hard rule.
-triggers: self-optimization, config check, token efficiency, skill management, optimize yourself, config review, quick audit, health ping, full audit, deep audit, weekly audit, 系统复盘, 团队复盘, config复盘
+description: "AI coding assistant health check and configuration audit. Detects bloat, drift, security issues, skill gaps, and pipeline violations. Quick mode (6+1 items, under 500 tokens) or Full mode (13 items with trend analysis, predictive warnings, and market intelligence). Use for: system health check, config audit, diagnostic, drift detection, compliance review, self-optimization. 用于：系统健康检查、配置审计、诊断、漂移检测、合规审查、自我优化。"
+triggers: "quick audit, full audit, deep audit, weekly audit, health check, system check, run audit, audit config, audit system, check config, check my config, config check, config review, check setup, check health, check my setup, diagnose, diagnostic, drift check, drift detection, self audit, self check, self optimization, optimize yourself, self optimize, skill management, skill check, check skills, token efficiency, compliance check, pipeline audit, health ping, 快速审计, 完整审计, 深度审计, 每周审计, 健康检查, 系统检查, 运行审计, 审计配置, 配置检查, 检查配置, 系统复盘, 团队复盘, config复盘, 自检, 自我审计, 诊断, 状态检查, 漂移检测, 合规审查, 自我优化, 技能管理, 令牌效率"
 ---
 
 ## Bootstrap (pre-flight)
@@ -29,26 +29,22 @@ To determine prior audit count, read `~/.claude/memory/audit-log.md` and count l
 
 **Quick mode**: items 1-6 + item 10-Quick (4 atomic env checks). **Full mode**: items 1-13 + trend analysis + predictive warnings.
 
+## Anti-Hallucination Gate
+
+Read `~/.claude/skills/self-audit/anti-hallucination-gate.md` before emitting ANY finding. All 4 gates (AH-1 through AH-4) must pass. Failure = suppress the finding.
+
 ## Agent Roles
 Boss (协调/决策/视觉审查) · Yushi (流程合规督查) · Gongjiang (代码/文档生成)
 Full roster & collaboration modes: `~/.claude/rules/team.md`
 
 ## Dynamic Paths
 
-All file paths in this skill use `~` as the home directory. Resolve `~` at runtime:
-- CLAUDE.md: `~/.claude/CLAUDE.md`
-- Settings: `~/.claude/settings.json`
-- Rules: `~/.claude/rules/coding.md`
-- Memory: `~/.claude/memory/`
-- Skills: `~/.claude/skills/`
-- Audit log: `~/.claude/memory/audit-log.md`
-- Environment: `~/.claude/memory/environment.md`
-- Archive: `~/.claude/memory/.archive/`
-- Yushi agent: `~/.claude/agents/yushi.md`
-- Skill usage inventory: `~/.claude/memory/skill-usage-inventory.md`
-- Memory index: `~/.claude/memory/MEMORY.md`
-- Pitfalls archive: `~/.claude/rules/pitfalls-archive.md`
-- Team rules: `~/.claude/rules/team.md`
+Resolve `~` at runtime. Core paths (full list in bootstrap.md Section 4):
+- Main config: `~/.claude/CLAUDE.md`, `~/.claude/settings.json`
+- Rules: `~/.claude/rules/coding.md`, `~/.claude/rules/team.md`, `~/.claude/rules/pitfalls-archive.md`
+- Memory: `~/.claude/memory/` (audit-log, environment, skill-usage-inventory, .archive/)
+- Agents: `~/.claude/agents/yushi.md`
+- Skills: `~/.claude/skills/`, `~/.agents/skills/`
 
 ## Overall Grade
 Computed from worst finding across all items. ACCEPTED findings excluded.
@@ -117,7 +113,7 @@ If a finding is in Accepted Exceptions, report it as "ACCEPTED (not counted)" wi
 
 ### 1. CLAUDE.md Size & Trend
 
-**Quick**: `wc -l ~/.claude/CLAUDE.md` — line count only. (~12 tokens)
+**Quick**: `wc -l ~/.claude/CLAUDE.md` — line count only. Do NOT read the file. (~12 tokens)
 **Full**: Read companion `~/.claude/skills/self-audit/compress-config.md`. Parse CLAUDE.md sections by `## ` headers. Compute 5-dim health score: D1 Section Balance(25%), D2 Structure Granularity(20%), D3 Prose Density(25%), D4 Reference Ratio(15%), D5 Line Count Modifier(15%). A-F grade per config thresholds. Jaccard dedup check (>=0.45, excl list). Min-section gate (<15 lines → F-CMD-004). 3-audit trend, +30d predict. Emit F-CMD-001~004 per trigger conditions.
 | Symptom | Cause | Verify | Fix |
 |---------|-------|--------|-----|

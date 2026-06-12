@@ -161,3 +161,26 @@ The taxonomy, repetition tracking, and promotion gate together form a closed fee
 | 5-dim weighted scoring (chosen) | Quality-graded, no false CRIT on structured growth, human-tunable | More complex than wc -l; companion file maintenance | Chosen — best balance of accuracy and transparency |
 
 **Consequences**: Teams can grow CLAUDE.md naturally. Diagnoses are actionable: "Section X has prose density 0.55, compress it" vs "your file is over 200 lines." Companion config file `compress-config.md` added. ADR-6/7/8/9 now form a consistent companion-file pattern for self-audit extensibility.
+
+### ADR-10: Anti-Hallucination Gate before Every Finding
+
+**Decision**: A mandatory 4-point verification gate (AH-1 through AH-4) runs before any finding is emitted. If any gate fails, the finding is suppressed — not downgraded, not reported with caveats, suppressed. The gate lives in companion file `anti-hallucination-gate.md` (ADR-6 pattern) to keep SKILL.md under 300 lines.
+
+**Rationale**: Self-audit findings influence structural promotion (3rd repetition -> hard pitfall in coding.md). A hallucinated finding that gets promoted becomes permanent guardrail overhead. The cost of a false positive far exceeds the cost of a false negative (missing one finding in one audit vs. adding a bogus pitfall forever).
+
+**Alternatives Considered**:
+
+| Option | Pros | Cons | Why rejected |
+|--------|------|------|-------------|
+| No gate (current) | Simpler output logic | Hallucinated findings can auto-promote to hard rules | Structural promotion makes false positives permanent |
+| Inline AH-GATE in SKILL.md | Always visible | Adds ~25 lines, violates F4 <=300 line constraint | Line budget (F4/F8) |
+| Companion file (chosen) | Keeps SKILL.md under 300; independently testable | Requires agent to read companion file | Chosen — architecturally consistent with ADR-6/7/8/9 |
+| Post-hoc human review only | Zero token cost | User rarely reviews raw audit output before pitfall promotion | Relies on human catching what automation created |
+
+**Consequences**: False negatives may increase slightly (overly conservative gate suppresses a real finding). False positives drop to near-zero. Trade-off accepted.
+
+## Fitness Functions (continued)
+
+| # | Function | Target | Measurement |
+|---|----------|--------|-------------|
+| F10 | Quick Mode Boundary Compliance | 0 violations | For last 3 entries where Task contains "self-audit (Quick)", extract all Finding IDs from Key Finding column. If any ID has prefix F-USE, F-ARC, F-YUS, F-SOL, F-SKP, or suffix F-ENV-004/005/007 -> boundary violation. |

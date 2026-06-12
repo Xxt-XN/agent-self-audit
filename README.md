@@ -81,9 +81,10 @@ Issues self-escalate: first occurrence suggests, second warns, third auto-promot
 | `environment-checks.md` | Toolchain, packages, network, baseline |
 | `market-intelligence.md` | GitHub marketplace scan and scoring |
 | `compress-config.md` | Health scoring weights and thresholds |
-| `DESIGN.md` | 9 ADRs, 9 fitness functions, data flow |
+| `DESIGN.md` | 10 ADRs, 10 fitness functions, data flow |
 | `README.md` | You are here |
 | `README_zh.md` | Chinese documentation |
+| `anti-hallucination-gate.md` | Anti-hallucination gate for findings |
 | `INSTALL.md` | Per-tool install commands |
 
 ---

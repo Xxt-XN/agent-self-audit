@@ -81,9 +81,10 @@ git clone https://github.com/Xxt-XN/agent-self-audit.git ~/.claude/skills/self-a
 | `environment-checks.md` | 工具链、包、网络、基线 |
 | `market-intelligence.md` | GitHub 市场扫描和评分 |
 | `compress-config.md` | 健康评分权重和阈值 |
-| `DESIGN.md` | 9 个 ADR、9 条 Fitness Function、数据流图 |
+| `DESIGN.md` | 10 个 ADR、10 条 Fitness Function、数据流图 |
 | `README.md` | 英文文档 |
 | `README_zh.md` | 中文文档 |
+| `anti-hallucination-gate.md` | 发现项的防幻觉门禁 |
 | `INSTALL.md` | 按工具分的安装命令 |
 
 ---
