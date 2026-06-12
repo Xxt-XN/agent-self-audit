@@ -82,7 +82,7 @@ Every finding MUST carry exactly one taxonomy tag AND one Finding ID. This enabl
 | Check Item | Prefix | IDs |
 |------------|--------|-----|
 | 1. CLAUDE.md | F-CMD- | 001: exceeding threshold, 002: duplicate content (Jaccard >0.45), 003: compression candidate (prose >0.50), 004: fragment section <15 lines |
-| 2. Skill Health | F-SKL- | 001: duplicate across sources, 002: broken symlink, 003: >25 total, 004: stale+better alt exists (Item 13), 005: active+better alt exists (Item 13), 006: market category gap (Item 13) |
+| 2. Skill Health | F-SKL- | 001: duplicate across sources, 002: broken symlink, 003: >25 total, 004: stale+better alt exists (Item 13), 005: active+better alt exists (Item 13), 006: skill category gap (Item 13) |
 | 3. Security | F-SEC- | 001: plaintext API key, 002: skipDangerousPrompt, 003: unverified plugin |
 | 4. Memory | F-MEM- | 001: MEMORY.md >200 lines, 002: missing frontmatter, 003: stale files |
 | 5. Model Routing | F-MDL- | 001: identical tiers, 002: outdated model names |
