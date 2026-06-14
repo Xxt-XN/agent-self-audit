@@ -78,10 +78,9 @@ def run_health_check(home: str = "") -> dict:
         if 'sk-' in content:
             findings.append({"severity": "CRITICAL", "id": "F-SEC-001",
                            "detail": "Potential plaintext API key in settings.json"})
-        if 'skipDangerousModePermissionPrompt' in content and \
-           '"skipDangerousModePermissionPrompt": true' in content.lower().replace(' ', ''):
+        if 'skipDangerousModePermissionPrompt' in content:
             findings.append({"severity": "WARNING", "id": "F-SEC-002",
-                           "detail": "skipDangerousPrompt enabled"})
+                           "detail": "skipDangerousPrompt present in settings.json"})
     except Exception:
         pass
 
