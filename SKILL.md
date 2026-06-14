@@ -284,6 +284,33 @@ All findings emitted in ONE batched report. No one-at-a-time output.
    |------------|-------------|---------------|--------|
    ```
 
+## SkillOpt-Sleep Integration
+
+When SkillOpt-Sleep is installed, self-audit serves as the **health scoring bridge** for its validation gate.
+
+### How it works
+1. SkillOpt-Sleep proposes an edit to CLAUDE.md or a SKILL.md
+2. Before gating, it calls `python ~/.claude/skills/self-audit/health_score.py`
+3. Self-audit returns a JSON health score: `{"score": 0.75, "grade": "B", ...}`
+4. The gate combines: `combined = 0.6 x task_replay_score + 0.4 x health_score`
+5. Edit is accepted only if combined score > baseline
+
+### Scoring table
+| Self-Audit Grade | Numeric Score | Meaning |
+|-----------------|---------------|---------|
+| A | 1.0 | All items OK |
+| B | 0.8 | Minor warnings |
+| C | 0.6 | 1 critical or 3+ warnings |
+| D | 0.4 | 2-3 criticals |
+| F | 0.0 | 4+ criticals or systemic failure |
+
+Each Critical finding: -0.1 (max -0.3). Each Warning: -0.05 (max -0.15).
+
+### Manual invocation
+```bash
+python ~/.claude/skills/self-audit/health_score.py --verbose
+```
+
 ## Handoff
 
 ## 希小台 Handoff
